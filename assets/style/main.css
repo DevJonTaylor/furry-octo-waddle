@@ -62,3 +62,7 @@ h3 {
 .hide {
     display: none;
 }
+
+.transition {
+    transform: rotateY(90deg);
+}
