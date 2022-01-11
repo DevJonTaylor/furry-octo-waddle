@@ -34,7 +34,7 @@ class JonDom {
   }
 
   show() {
-    this.forEach(node => node.style.display = 'show');
+    this.forEach(node => node.style.display = '');
   }
 
   hide() {
@@ -60,21 +60,29 @@ class JonDom {
   onClickOnce(eventListener) {
     this.once('click', eventListener);
   }
-}
-function _$(selector) {
-  return new JonDom(selector);
+
+  children(selector) {
+    let newJD = new JonDom('body');
+    newJD._el = this._el[0].querySelectorAll(selector);
+    return newJD;
+  }
+
+  static _$(selector) {
+    return new JonDom(selector);
+  }
+
+  static DOMReady(callback) {
+    setInterval(() => {
+      if(document.readyState === 'complete')
+        callback(this._$);
+    });
+  }
 }
 
-(_$$ => {
+JonDom.DOMReady(_$ => {
   const _options = {
     transitionTime: 300
   }
-
-  _$('#start .btn')
-    .onClick(() => {
-    flipOut(_$('#start'))
-      .then(() => flipIn(_$('#quiz')));
-  })
 
   function flipIn($) {
     return new Promise(res => {
@@ -94,5 +102,20 @@ function _$(selector) {
     })
   }
 
+  const start = _$('#start');
+  const quiz = _$('#quiz');
 
-})(JonDom)
+  start.children('.btn')
+    .onClickOnce(() => {
+      flipOut(start)
+        .then(() => flipIn(quiz));
+    })
+
+  quiz.children('.btn').onClick(() => {
+    flipOut(quiz)
+      .then(() => {
+        // TODO: update dom
+        return flipIn(quiz);
+      })
+  })
+})
