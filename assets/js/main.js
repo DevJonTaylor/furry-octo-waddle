@@ -1,3 +1,14 @@
+const _transition = {
+  time: 300
+}
+
+const _timer = {
+  interval: 1000,
+  start: 75,
+  tick: 1,
+  incorrect: 10
+}
+
 class JonDom {
   constructor(selector) {
     this.$(selector);
@@ -67,6 +78,10 @@ class JonDom {
     return newJD;
   }
 
+  text(text) {
+    this.forEach(node => node.innerText = text);
+  }
+
   static _$(selector) {
     return new JonDom(selector);
   }
@@ -79,10 +94,37 @@ class JonDom {
   }
 }
 
-JonDom.DOMReady(_$ => {
-  const _options = {
-    transitionTime: 300
+class TimeController {
+  constructor(_$) {
+    this._$ = _$;
+    this.current = _timer.start;
   }
+
+  start() {
+    this.current = _timer.start;
+    this.interval = setInterval(this.tick.bind(this), _timer.interval);
+  }
+
+  tick() {
+    this.subtract(1);
+    this.write();
+    if(this.current === 0) this.stop();
+  }
+
+  stop() {
+    clearInterval(this.interval);
+  }
+
+  write() {
+    this._$.text(this.current);
+  }
+
+  subtract(amount) {
+    this.current -= amount;
+  }
+}
+
+JonDom.DOMReady(_$ => {
 
   function flipIn($) {
     return new Promise(res => {
@@ -98,15 +140,17 @@ JonDom.DOMReady(_$ => {
       setTimeout(() => {
         $.hide();
         res();
-      }, _options.transitionTime);
+      }, _transition.time);
     })
   }
 
   const start = _$('#start');
   const quiz = _$('#quiz');
+  const timer = new TimeController(_$('#timer'));
 
   start.children('.btn')
     .onClickOnce(() => {
+      timer.start();
       flipOut(start)
         .then(() => flipIn(quiz));
     })
@@ -115,6 +159,7 @@ JonDom.DOMReady(_$ => {
     flipOut(quiz)
       .then(() => {
         // TODO: update dom
+        timer.subtract(10);
         return flipIn(quiz);
       })
   })
