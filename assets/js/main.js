@@ -9,7 +9,7 @@ const _transition = {
 }
 const _timer = {
   interval: 1000,
-  start: 75,
+  start: 10,
   tick: 1,
   incorrect: 10
 }
@@ -90,6 +90,7 @@ class QuizManager {
   #container;
   #timer;
   #endHigh;
+  #updateScore;
   constructor($_Container, timer, $_endHigh) {
     this.#timer = timer;
     this.#container = $_Container;
@@ -121,6 +122,7 @@ class QuizManager {
 
   set answer(answer) {
     this.current.answer = answer;
+    this.updateScore();
     if(!this.current.isCorrect)
       this.#timer.subtract(_timer.incorrect);
     this.currentIndex++;
@@ -132,7 +134,18 @@ class QuizManager {
         } else {
           return this.flipIn(this.#endHigh)
         }
-      })
+      });
+  }
+
+  updateScore(_$) {
+    const noUpdater = this.#updateScore === undefined;
+    const noArg = _$ === undefined;
+    if(noArg && noUpdater) return
+    if(noUpdater) {
+      this.#updateScore = _$;
+    }
+
+    this.#updateScore.text(this.score);
   }
 
   flipOut($_ = this.#container) {
@@ -183,6 +196,10 @@ class QuizManager {
   }
 
   reset() {
+    this.#timer.onEnd(() => {
+      this.flipOut()
+        .then(this.flipIn(this.#endHigh));
+    })
     for(let question of this.questions)
       question.answer = null;
   }
@@ -276,9 +293,11 @@ class JonDom {
 }
 
 class TimeController {
+  #runOnEnd;
   constructor(_$) {
     this._$ = _$;
     this.current = _timer.start;
+    this.#runOnEnd = [];
   }
 
   start() {
@@ -292,8 +311,15 @@ class TimeController {
     if(this.current === 0) this.stop();
   }
 
+  onEnd(eventListener) {
+    this.#runOnEnd.push(eventListener);
+  }
+
   stop() {
     clearInterval(this.interval);
+    for(let eventListener of this.#runOnEnd) {
+      eventListener();
+    }
   }
 
   write() {
@@ -301,19 +327,12 @@ class TimeController {
   }
 
   subtract(amount) {
-    this.current -= amount;
+    let newAmount = (this.current - amount);
+    this.current = newAmount <= 0 ? 0 : newAmount;
   }
 }
 
 JonDom.DOMReady(_$ => {
-  function flipIn($) {
-    return new Promise(res => {
-      $.show();
-      $.removeClass('transition');
-      res();
-    })
-  }
-
   const start = _$('#start');
   const quiz = _$('#quiz');
   const timer = new TimeController(_$('#timer'));
@@ -324,9 +343,9 @@ JonDom.DOMReady(_$ => {
     .addQuestion(q2)
     .addQuestion(q3)
     .addQuestion(q4)
-    .addQuestion(q5);
+    .addQuestion(q5)
+    .updateScore(_$('#score'));
   debugger;
-
 
   start.children('.btn')
     .onClickOnce(event => {
