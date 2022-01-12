@@ -266,10 +266,12 @@ class JonDom {
   }
 
   static DOMReady(callback) {
-    setInterval(() => {
-      if(document.readyState === 'complete')
+    let stateReadyCheck = setInterval(() => {
+      if(document.readyState === 'complete') {
+        clearInterval(stateReadyCheck);
         callback(this._$);
-    });
+      }
+    }, 10);
   }
 }
 
