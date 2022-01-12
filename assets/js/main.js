@@ -74,7 +74,7 @@ class Question {
   }
 
   set answer(answer) {
-    this.#answerProvided = answer;
+    this.#answerProvided = parseInt(answer);
   }
 
   get isCorrect() {
@@ -325,6 +325,8 @@ JonDom.DOMReady(_$ => {
     .addQuestion(q3)
     .addQuestion(q4)
     .addQuestion(q5);
+  debugger;
+
 
   start.children('.btn')
     .onClickOnce(event => {

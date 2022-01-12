@@ -9,9 +9,9 @@ mobile first design.
 
 ## Goals
 
-- [ ]  Start button should begin quiz and start timer
-- [ ]  Answering a question provides a new question
-- [ ]  Answering questions incorrectly takes time away
+- [X]  Start button should begin quiz and start timer
+- [X]  Answering a question provides a new question
+- [X]  Answering questions incorrectly takes time away
 - [ ]  All questions answered or time runs out and quiz ends
 - [ ]  Score can be kept in localStorage
 - [ ]  Top three scores are presented at beginning of quiz
