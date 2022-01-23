@@ -2,43 +2,88 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
     <title>Code Quiz</title>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/open-iconic/1.1.1/font/css/open-iconic.min.css" integrity="sha512-LeCmts7kEi09nKc+DwGJqDV+dNQi/W8/qb0oUSsBLzTYiBwxj0KBlAow2//jV7jwEHwSCPShRN2+IWwWcn1x7Q==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="stylesheet" type="text/css" href="./assets/style/main.css" />
 </head>
+    <section id="toast">
+
+    </section>
     <body>
-        <header>
-            <div>
-                <p><a href="#">View Scores</a></p>
+        <header class="mt-1 d-flex justify-content-between container">
+            <div >
+                <p><button class="btn btn-lg btn-info">View Scores</button></p>
             </div>
             <div>
-                <p>Time: <span id="timer">75</span></p>
+                <h2 class="badge-secondary badge-pill text-center">
+                    <span class="oi" data-glyph="timer"></span>
+                    <span id="timer" class="badge">75</span>
+                </h2>
             </div>
         </header>
-        <main>
-            <section id="start">
-                <h1>Code Quiz</h1>
-                <p>Answer the following questions as accurate and fast as possible while keeping in mind that incorrect answers will reduce your time.</p>
-                <button class="btn">Start Quiz</button>
+        <main class="container">
+            <section id="start" class="card shadow fade show">
+                <div class="card-body row">
+                    <div class="col-12">
+                        <h1 class="card-title text-center text-primary">Code Quiz</h1>
+                    </div>
+                    <div class="col-12">
+                        <p class="h3 text-info">Answer the following questions as accurate and fast as possible while keeping in mind that incorrect answers will reduce your time.</p>
+                    </div>
+                    <div class="col-12 text-center">
+                        <button class="btn btn-primary w-50 btn-lg" data-opt="4">Start Quiz</button>
+                    </div>
+                </div>
             </section>
-            <section id="quiz" class="transition">
-                <h3 id="question">I am a placeholder</h3>
-                <button class="btn ">I am a placeholder</button>
-                <button class="btn">I am a placeholder</button>
-                <button class="btn">I am a placeholder</button>
-                <button class="btn">I am a placeholder</button>
+            <section id="quiz" class="fade d-none card shadow rounded" data-quiz="0">
+                <div class="card-body d-flex row">
+                    <p id="question" class="h3 card-title col-12">I am a placeholder</p>
+                    <div class="col-12 row">
+                        <div class="col-12 my-1">
+                            <button class="btn btn-primary" data-opt="0">I am a placeholder</button>
+                        </div>
+                        <div class="col-12 my-1">
+                            <button class="btn btn-primary" data-opt="1">I am a placeholder</button>
+                        </div>
+                        <div class="col-12 my-1">
+                            <button class="btn btn-primary" data-opt="2">I am a placeholder</button>
+                        </div>
+                        <div class="col-12 my-1">
+                            <button class="btn btn-primary" data-opt="3">I am a placeholder</button>
+                        </div>
+                    </div>
+                </div>
             </section>
-            <section id="end-high" class="transition">
-                <h3>All Done!</h3>
-                <p>Your Score: <span id="score"></span></p>
-                <div>
-                    <input type="text" id="user-name" placeholder="Enter Name"/>
-                    <label for="user-name">Enter Name</label>
-                    <button id="submit-score" class="btn">Submit</button>
+            <section id="end" class="fade d-none card shadow rounded">
+                <div class="card-body row">
+                    <div class="col-12">
+                        <h2 class="text-center card-title text-primary">All Done!</h2>
+                    </div>
+                    <div class="col-12 text-center">
+                        <p class="h3 text-success">Your Score: <span id="score" class="badge badge-pill badge-success">40</span></p>
+                    </div>
+                    <div class="col-12 d-flex align-items-center justify-content-center">
+                        <form id="high-score">
+                            <div class="form-group">
+                                <label for="user-name" class="text-primary">Enter Name</label>
+                                <input type="text" class="form-control" id="user-name" placeholder="Enter Name"/>
+                            </div>
+                            <div class="form-group">
+                                <button class="btn btn-primary form-control" type="submit">Submit</button>
+                            </div>
+                        </form>
+                    </div>
                 </div>
             </section>
         </main>
+        <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+        <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
         <script src="./assets/js/main.js"></script>
     </body>
 </html>

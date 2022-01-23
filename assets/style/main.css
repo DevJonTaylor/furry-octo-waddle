@@ -1,68 +1,37 @@
-body {
-    padding: 0 5px;
-    margin: 0;
-    font-size: 16px;
-    color: #333;
+#toast {
+    position: fixed;
+    z-index: 1;
+    inset-inline: 0;
+    inset-block-end: 0;
+    padding-block-end: 5vh;
+    display: grid;
+    justify-items: center;
+    justify-content: center;
+    gap: 1vh;
+    pointer-events: none;
 }
 
-header {
-    display: flex;
-    justify-content: space-between;
+.toast {
+    max-inline-size: min(25ch, 90vw);
+    padding-block: .5ch;
+    padding-inline: 1ch;
+    border-radius: 3px;
+    font-size: 1rem;
+    will-change: transform;
+    animation:
+            fade-in .3s ease,
+            slide-in .3s ease,
+            fade-out .3s ease 3s;
 }
 
-section {
-    display: flex;
-    overflow: visible;
-    min-height: 100%;
-    padding-right: 5px;
-    padding-bottom: 10px;
-    padding-left: 5px;
-    flex-flow: column wrap;
-    place-content: center;
-    align-items: center;
-    border-radius: 11px;
-    box-shadow: rgb(0 0 0 / 35%) 14px 14px 20px 0;
-    opacity: 1;
-    transition: transform 300ms ease-in-out;
+@keyframes fade-in {
+    from { opacity: 0 }
 }
 
-#quiz {
-    flex-flow: row wrap;
-    justify-content: space-evenly;
+@keyframes fade-out {
+    to { opacity: 0 }
 }
 
-h1 {
-    font-size: 40px;
-}
-
-h3 {
-    font-size: 30px;
-    flex: 0 0 100%;
-    text-align: center;
-}
-
-.btn {
-    display: inline-block;
-    padding: 9px 15px;
-    color: white;
-    border: 0;
-    line-height: inherit;
-    text-decoration: none;
-    cursor: pointer;
-    border-radius: 6px;
-    background-color: rgb(174, 0, 255);
-    box-shadow: black 1px 1px 10px -2px;
-    margin-top: 15px;
-}
-
-.btn:hover {
-    background-color: hotpink;
-}
-
-.hide {
-    display: none;
-}
-
-.transition {
-    transform: rotateY(90deg);
+@keyframes slide-in {
+    from { transform: translateY(10px) }
 }
