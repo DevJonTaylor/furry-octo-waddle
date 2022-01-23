@@ -16,7 +16,7 @@
     <body>
         <header class="mt-1 d-flex justify-content-between container">
             <div >
-                <p><button class="btn btn-lg btn-info">View Scores</button></p>
+                <p><button class="btn btn-lg btn-info" data-toggle="modal" data-target="#score-cards">View Scores</button></p>
             </div>
             <div>
                 <h2 class="badge-secondary badge-pill text-center">
@@ -40,20 +40,23 @@
                 </div>
             </section>
             <section id="quiz" class="fade d-none card shadow rounded" data-quiz="0">
-                <div class="card-body d-flex row">
+                <div class="card-body row">
                     <p id="question" class="h3 card-title col-12">I am a placeholder</p>
                     <div class="col-12 row">
-                        <div class="col-12 my-1">
-                            <button class="btn btn-primary" data-opt="0">I am a placeholder</button>
+                        <div class="col-12 col-md-6 col-lg-4 my-1">
+                            <button class="btn btn-primary w-100" data-opt="0">I am a placeholder</button>
                         </div>
-                        <div class="col-12 my-1">
-                            <button class="btn btn-primary" data-opt="1">I am a placeholder</button>
+                        <div class="col-md-6 col-lg-8"></div>
+                        <div class="col-12 col-md-6 col-lg-4 my-1">
+                            <button class="btn btn-primary w-100" data-opt="1">I am a placeholder</button>
                         </div>
-                        <div class="col-12 my-1">
-                            <button class="btn btn-primary" data-opt="2">I am a placeholder</button>
+                        <div class="col-md-6 col-lg-8"></div>
+                        <div class="col-12 col-md-6 col-lg-4 my-1">
+                            <button class="btn btn-primary w-100" data-opt="2">I am a placeholder</button>
                         </div>
-                        <div class="col-12 my-1">
-                            <button class="btn btn-primary" data-opt="3">I am a placeholder</button>
+                        <div class="col-md-6 col-lg-8"></div>
+                        <div class="col-12 col-md-6 col-lg-4 my-1">
+                            <button class="btn btn-primary w-100" data-opt="3">I am a placeholder</button>
                         </div>
                     </div>
                 </div>
@@ -71,6 +74,7 @@
                             <div class="form-group">
                                 <label for="user-name" class="text-primary">Enter Name</label>
                                 <input type="text" class="form-control" id="user-name" placeholder="Enter Name"/>
+                                <span class="text-danger d-none">You must enter a name.</span>
                             </div>
                             <div class="form-group">
                                 <button class="btn btn-primary form-control" type="submit">Submit</button>
@@ -79,6 +83,54 @@
                     </div>
                 </div>
             </section>
+            <div class="modal fade" id="score-cards" tabindex="-1" role="dialog" aria-labelledby="score-card-title" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="score-card-title">High Scores</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th>NAME</th>
+                                        <th>SCORE</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr id="number1">
+                                        <td>EMPTY</td>
+                                        <td>00</td>
+                                    </tr>
+                                    <tr id="number2">
+                                        <td>EMPTY</td>
+                                        <td>00</td>
+                                    </tr>
+                                    <tr id="number3">
+                                        <td>EMPTY</td>
+                                        <td>00</td>
+                                    </tr>
+                                    <tr id="number4">
+                                        <td>EMPTY</td>
+                                        <td>00</td>
+                                    </tr>
+                                    <tr id="number5">
+                                        <td>EMPTY</td>
+                                        <td>00</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="modal-footer d-flex justify-content-between">
+                            <button type="button" class="btn btn-default" id="clear-scores">CLEAR SCORES</button>
+                            <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </main>
         <!-- jQuery first, then Popper.js, then Bootstrap JS -->
         <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>

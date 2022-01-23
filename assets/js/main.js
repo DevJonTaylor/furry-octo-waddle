@@ -1,8 +1,6 @@
 /**
  * The questions are contained inside an array which houses objects.  These objects are then passed to the
  * Question class.
- * @type {[{solution: number, questions: string, options: string[]},{solution: number, questions: string, options: string[]},{solution: number, questions: string, options: string[]},{solution: number, questions: string, options: string[]},{solution: number, questions: string, options: string[]},null,null,null,null,null]}
- * @private
  */
 const _questions = [
   {
@@ -168,15 +166,6 @@ class QuizCard {
     return correct;
   }
 
-  get incorrect() {
-    let incorrect = 0;
-    this.#iterateThroughAnswers((solution, answered) => {
-      if(solution !== answered) incorrect++;
-    })
-
-    return incorrect;
-  }
-
   #iterateThroughAnswers(callback) {
     for(let i in this.answers) {
       let solution = this.questions[i].solution;
@@ -211,6 +200,10 @@ class QuizCard {
     this.$.find('[data-opt="3"]').text(this.current.options[3]);
   }
 
+  calculate() {
+    return Math.round((this.correct / this.questions.length) * 100);
+  }
+
   async show() {
     await fadeIn(this.$);
     return this;
@@ -224,7 +217,8 @@ class QuizCard {
 
 class EndCard {
   constructor() {
-    this.$ = $('#end')
+    this.$ = $('#end');
+    this.form = this.$.find('#high-score');
   }
 
   async show() {
@@ -238,10 +232,83 @@ class EndCard {
   }
 }
 
-let score = 0;
+class ScoreStorage {
+  constructor() {
+    this.scores = [];
+
+    this.getScores();
+  }
+
+  getScores() {
+    let scores = localStorage.getItem('high-scores');
+    if(scores === null) return this.scores = [];
+    this.scores = JSON.parse(scores);
+    this.updateScoreCard();
+  }
+
+  setScores() {
+    let storageString = JSON.stringify(this.scores);
+    localStorage.setItem('high-scores', storageString);
+    this.updateScoreCard();
+  }
+
+  displayScoreCard(n, name, score) {
+    let parent = jQuery(`#number${(n)}`);
+    parent.children().first().text(name)
+    parent.children().last().text(score);
+  }
+
+  resetScoreCard() {
+    for(let i = 1; i < 6; i++) {
+      this.displayScoreCard(i, 'EMPTY', '00')
+    }
+  }
+
+  updateScoreCard() {
+    this.resetScoreCard();
+    let i = 1;
+    for(let score of this.scores) {
+      if(i === 6) return;
+      this.displayScoreCard(i, score.name, score.score);
+      i++
+    }
+  }
+
+  sortScores() {
+    let tempArray = Array().concat(this.scores) // Creating a new array.
+    tempArray.sort((a,b) => {
+      return a.score > b.score ? -1 : // If Score is higher
+        (a.score === b.score && a.date < b.date) ? -1 : 1; // Then check if the score is equal and date is lower.
+    })
+
+    this.scores = tempArray;
+  }
+
+  newScore(name, score) {
+    const date = new Date().getTime();
+    this.getScores();
+
+    this.scores.push({
+      name,
+      score,
+      date
+    })
+
+    this.sortScores();
+
+    this.setScores();
+  }
+
+  clearScores() {
+    this.scores = [];
+    this.setScores();
+  }
+}
+
 let timer = new TimeManagement();
 let quiz = new QuizCard(_questions);
 let endCard = new EndCard();
+let scores = new ScoreStorage();
 
 timer.onStart(el => {
   el.parentElement.classList.add('bg-success');
@@ -252,16 +319,23 @@ timer.onEnd(el => {
   el.parentElement.classList.add('bg-danger');
   el.parentElement.classList.remove('bg-success');
   quiz.hide()
-    .then(() => endCard.show());
+    .then(() => {
+      $('#score').text(quiz.calculate());
+      return endCard.show()
+    });
 })
 
 function startQuiz() {
   let start = $('#start');
+  quiz = new QuizCard(_questions);
   timer.start();
   quiz.display();
-  score = 0;
   fadeOut(start)
     .then(() => quiz.show());
+}
+
+function onClearScores() {
+  scores.clearScores();
 }
 
 function answerQuestion() {
@@ -295,12 +369,38 @@ function provideMark(isCorrectAnswer) {
   }
 }
 
+function submitHighScore(event) {
+  event.preventDefault();
+  const userName = $('#user-name');
+  const userNameText = userName.val();
+  const score = parseInt($('#score').text());
+
+  if(userNameText === '') return userName
+    .parent()
+    .find('span')
+    .removeClass('d-none');
+  userName
+    .parent()
+    .find('span')
+    .addClass('d-none');
+  userName.val('');
+  scores.newScore(userNameText, score);
+  endCard.hide()
+    .then(() => fadeIn($('#start')));
+}
+
 jQuery(function($) {
   // Setting event for starting the quiz.
   $('#start .btn').click(startQuiz)
 
   // Setting event for answering a question.
   $('#quiz .btn').click(answerQuestion)
+
+  // Setting event for clearing scores.
+  $('#clear-scores').click(onClearScores);
+
+  // Setting event for score submission.
+  endCard.form.on('submit', submitHighScore)
 })
 
 /**
