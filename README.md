@@ -6,8 +6,8 @@
 ![Bootstrap 4](https://img.shields.io/badge/Bootstrap-v4-purple?style=plastic)
 
 A code quiz to work on my responsive web design as well as interactive web development.
-The quiz will include five simple JavaScript questions.  You will have 60 seconds to
-answer as many as possible.  When you answer one incorrectly it will subtract 10 seconds.
+The quiz will include five simple JavaScript questions.  You will have certain amount of time 
+to answer as many as possible.  When you answer one incorrectly it will subtract 10 seconds.
 This will provide practice with events, functional programming, DOM manipulation, and
 mobile first design.
 
