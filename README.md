@@ -1,5 +1,9 @@
 # Code Quiz
-![HTML 10%](https://img.shields.io/badge/HTML-10%25-green?style=plastic)![CSS 10%](https://img.shields.io/badge/CSS-10%25-hotpink?style=plastic)![JAVASCRIPT 10%](https://img.shields.io/badge/JavaScript-10%25-blue?style=plastic)![jQuery slim](https://img.shields.io/badge/jQuery-v3.3.1-yellow?style=plastic)![Bootstrap 4](https://img.shields.io/badge/Bootstrap-v4-purple?style=plastic)
+![HTML 10%](https://img.shields.io/badge/HTML-10%25-green?style=plastic)
+![CSS 10%](https://img.shields.io/badge/CSS-10%25-hotpink?style=plastic)
+![JAVASCRIPT 10%](https://img.shields.io/badge/JavaScript-10%25-blue?style=plastic)
+![jQuery slim](https://img.shields.io/badge/jQuery-v3.3.1-yellow?style=plastic)
+![Bootstrap 4](https://img.shields.io/badge/Bootstrap-v4-purple?style=plastic)
 
 A code quiz to work on my responsive web design as well as interactive web development.
 The quiz will include five simple JavaScript questions.  You will have 60 seconds to
