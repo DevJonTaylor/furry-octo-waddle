@@ -9,7 +9,9 @@ A code quiz to work on my responsive web design as well as interactive web devel
 The quiz will include five simple JavaScript questions.  You will have 60 seconds to
 answer as many as possible.  When you answer one incorrectly it will subtract 10 seconds.
 This will provide practice with events, functional programming, DOM manipulation, and
-mobile first design.## Goals
+mobile first design.
+
+## Goals
 
 - [X]  Start button should begin quiz and start timer
 - [X]  Answering a question provides a new question
@@ -21,12 +23,10 @@ mobile first design.## Goals
 ## Demo
 
 You can find a demo at [GitHub Pages](https://devjontaylor.github.io/furry-octo-waddle/).
-If you would like deploy it yourself follow the next section.  =)
-
 
 ## Deployment
 
-The dependancies are for:
+The dependencies are for:
 - [jQuery Slim v3.3.1](https://jquery.com/)
 - [Bootstrap v4.1.3](https://getbootstrap.com/docs/4.6/getting-started/introduction/)
   A CDN was used so no direct installation or setup needed.  Just need internet when
